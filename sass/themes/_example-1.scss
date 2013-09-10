@@ -1,0 +1,37 @@
+@import "components/colorise";
+$color: #333;
+$link: Purple;
+$background-color: #fff;
+@include coloriseDark($color, $link, $background-color, 10);
+@include coloriseBp(false);
+
+body { }
+	.page { }
+		.header, .main, .footer {}
+		.header {}
+			.header__logo { }
+				.header__logo-image {}
+			.header__name-and-slogan { }
+				.header__site-name {}
+				.header__site-slogan { }
+			.header__secondary-menu { 
+				ul { }
+			}
+			.header__region {}
+		#main-menu {}
+		
+		.main {}
+
+		.main-content {}
+		.sidebars {}
+			.region-sidebar-first {}
+			.region-sidebar-second {}
+
+		.footer {
+			@include coloriseLumaTriadic(DarkMagenta);
+			@include coloriseMe(true);
+			.block {}
+				.block__title { }
+		}
+		
+		#navigation { @include coloriseMe(true); }

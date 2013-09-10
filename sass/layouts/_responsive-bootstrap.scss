@@ -1,0 +1,104 @@
+@import "compass/utilities";
+@import "compass/typography";
+.page { 
+	margin: 3em auto; 
+	border: 1px solid $gray-light; 
+	@include box-shadow(1px 1px 5px rgba(#000, 0.4));
+	@media (min-width: $screen-tablet) {
+		max-width: $container-tablet + 2;
+	}
+	@media (min-width: $screen-desktop) {
+		max-width: $container-desktop + 2;
+	}
+	@media (min-width: $screen-lg-desktop) {
+		max-width: $container-lg-desktop + 2;
+	}
+}
+.header, .main, .footer {
+	@extend .container;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+.header {}
+	.header__logo { display: block; @include make-sm-column(3);  text-align: center; }
+		.header__logo-image {}
+	.header__name-and-slogan { @include make-sm-column(5); }
+		.header__site-name {
+		}
+		.header__site-slogan {  }
+	.header__secondary-menu { 
+		@include pull-right;
+		ul {
+			@extend .nav; 
+			@extend .nav-pills;
+		}
+	}
+	.header {
+		.block__title { @include hide-text; }
+	}
+	.header__region {
+		@include make-sm-column(4);
+		ul.menu {
+			@include horizontal-list;
+		}
+	}
+	
+
+.main-navigation { 
+	@extend .navbar; 
+	@extend .navbar-default;
+	ul { @extend .nav; @extend .navbar-nav; padding-left: 1em; }
+		a { 
+			&:hover, &:active, &:focus { text-decoration: underline; }
+		 }
+}
+
+.two-sidebars {
+	.main-content {
+		@include make-sm-column(12);
+		@include make-md-column(8);
+		@include make-md-column-push(2);
+	}
+	.region-sidebar-first {
+		@include make-sm-column(6);
+		@include make-md-column(2);
+		@include make-md-column-pull(8);
+	}
+	.region-sidebar-second {
+		@include make-sm-column(6);
+		@include make-md-column(2);
+	}
+}
+
+
+.sidebar-first {
+	.main-content {
+		@include make-md-column(9);
+		@include make-md-column-push(3);
+	}
+	.region-sidebar-first {
+		@include make-md-column(3);
+		@include make-md-column-pull(9);
+	}
+}
+
+
+.sidebar-second {
+	.main-content {
+		@include make-md-column(9);
+	}
+	.region-sidebar-first {
+		@include make-md-column(3);
+	}
+}
+
+.footer {
+	.block {
+		@include make-md-column(3);
+		.block__title {  }
+	}
+	.block.last {
+		@include make-md-column(12);
+	}
+}

@@ -1,0 +1,412 @@
+$originalColor: #fff !default;
+$accentColor: 	#4f0101 !default;
+$supportColor: 	#002166 !default;
+
+$baseColor:		#002b36 !default;
+$altColor:		#586e75 !default;
+
+$quietColor:    #073642 !default;
+$loudColor:     #657b83 !default;
+$headerColor:   #839496 !default;
+
+$baseBackground: 	#fdf6e3 !default;
+$altBackground:  	#eee8d5 !default;
+
+$headerBackground:		#93a1a1 !default;
+$quietBackground:		darken($baseBackground, 6.67%) !default;
+$loudBackground:		darken($baseBackground, 13.33%) !default;
+
+$linkColor:        #268bd2 !default;
+$linkColorHover:   #dc322f !default;
+$linkColorFocus:   #2aa198 !default;
+$linkColorActive:  #859900 !default;
+$linkColorVisited: #d33682 !default;
+
+$tableHeader: #93a1a1 !default;
+$tableStripe: #eee8d5 !default;
+
+$colorisePallete: $baseColor $altColor $quietColor $loudColor $headerColor $baseBackground $altBackground $quietBackground $loudBackground $headerBackground $linkColor $linkColorHover $linkColorFocus $linkColorActive $linkColorVisited $tableHeader $tableStripe;
+
+
+/** Calculate luma for a color **/
+@function luma($color){
+	@return round(
+		((red($color)*299)+(green($color)*587)+(blue($color)*114))/1000
+	);
+}
+
+/** Choose a color with a specified luma threshold... Vary based on lightness, then saturation. **/
+@function luma-threshold($color, $threshold, $lighter: true){
+	$h: hue($color); $s: saturation($color); $l: lightness($color);
+	@if ($lighter){
+		$l: 5;
+	} @else {
+		$l: 95;
+	}
+	$color: hsl($h, 100, $l);
+	$notfound: (luma($color) - $threshold > 0) != $lighter;
+	@while ($notfound){
+		$color: hsl($h, 100, $l);
+		@if ((luma($color) - $threshold > 0) == $lighter){
+			@return $color;
+		}
+		@if ($lighter){
+			$l: $l + 5;
+		} @else {
+			$l: $l - 5;
+		}
+		@if ($l > 100){
+			$notfound: false;
+			@return #fff;
+		}
+		@if ($l < 0){
+			$notfound: false;
+			@return #000;
+		}
+	}
+	@return $color;
+}
+
+
+@mixin coloriseLuma($color, $link, $background, $color-threshold: 5, $diff: 150){
+	@if (luma($background) > 128){
+		$threshold: luma($background) - $diff;
+		$color: luma-threshold($color, $threshold, false);
+		$link: luma-threshold($link, $threshold, false);
+		@include coloriseDark($color, $link, $background, $color-threshold);
+	} @else {
+		$threshold: luma($background) + $diff;
+		$color: luma-threshold($color, $threshold);
+		$link: luma-threshold($link, $threshold);
+		@include coloriseLight($color, $link, $background, $color-threshold);
+	}
+}
+
+@mixin colorise($color, $link, $background, $threshold: 10){
+  @if (lightness($background) > 50) {
+		/** This is a light background. Make sure its lightness is above 80 **/
+		@if (lightness($background) < 75){
+			$background: hsl(hue($background), saturation($background), 80);
+		}
+		// The lightness of the text and link should be less than 30
+		@if (lightness($color) > 15){
+			$color: hsl(hue($color), saturation($color), 15);
+		}
+		@if (lightness($link) > 15){
+			$link: hsl(hue($link), saturation($link), 15);
+		}
+		/**
+		Results of a light background in dark text
+		**/
+		@include coloriseDark($color, $link, $background, $threshold);
+	} @else {
+		/** This is a dark background. Make sure its lightness is less than 30 **/
+		@if (lightness($background) > 25){
+			$background: hsl(hue($background), saturation($background), 15);
+		}
+		@if (lightness($color) < 85){
+			$color: hsl(hue($color), saturation($color), 85);
+		}
+		@if (lightness($link) < 85){
+			$link: hsl(hue($link), saturation($link), 85);
+		}
+		@include coloriseLight($color, $link, $background, $threshold);
+	}
+}
+
+
+// Assign 2 dark color with a light background...
+@mixin coloriseDark($color, $link, $background-color, $threshold: 10){
+	// Common elements
+	$baseColor:     		$color;
+	$baseBackground:  	$background-color;
+	$linkColor:        $link;
+
+	// Color variants
+	$altColor:  		 lighten($baseColor, $threshold);
+	$headerColor:   darken($baseColor, 0.667 * $threshold);
+	$quietColor:    tint($baseColor, 2*$threshold);
+	$loudColor:     shade($baseColor, 1.333 * $threshold);
+
+	// alt background is mixed between link color and base background...
+	$altBackground:  		darken($background-color, $threshold);
+	$headerBackground:   shade($altBackground, $threshold);
+	// table background is mixed between text color and base background...
+
+	$loudBackground:     shade($baseBackground, 1.333 * $threshold);
+	$quietBackground:    shade($baseBackground, 0.667 * $threshold);
+
+	$tableStripe: darken($background-color, 0.667 * $threshold);
+	$tableHeader: shade($tableStripe, $threshold);
+
+
+	// link color variants
+	$linkColorHover:   darken($linkColor, 1.333 * $threshold);
+	$linkColorFocus:   darken($linkColor, 0.667 * $threshold);
+	$linkColorActive:  shade($linkColor, 0.667 * $threshold);
+	$linkColorVisited: shade($linkColor, 1.333 * $threshold);
+}
+
+/** Assign 2 light color with a dark background **/
+@mixin coloriseLight($color, $link, $background-color, $threshold: 10){
+	// Common elements
+	$baseColor:     		$color;
+	$baseBackground:  	$background-color;
+	$linkColor:        $link;
+
+	// Color variants
+	$altColor:  	 darken($baseColor, $threshold);
+	$headerColor:   lighten($baseColor, 0.667 * $threshold);
+	$quietColor:    shade($baseColor, 2*$threshold);
+	$loudColor:     tint($baseColor, 1.333 * $threshold);
+
+	$altBackground:		lighten($background-color, $threshold);
+	$headerBackground:		tint($altBackground, $threshold);
+	// table background is mixed between text color and base background...
+	$tableStripe:	lighten($background-color, $threshold);
+	$tableHeader:	tint($tableStripe, $threshold);
+
+	$loudBackground:     tint($baseBackground, 1.333 * $threshold);
+	$quietBackground:    tint($baseBackground, 0.667 * $threshold);
+
+	// link color variants
+	$linkColorHover:		lighten($linkColor, 1.333 * $threshold);
+	$linkColorFocus:		lighten($linkColor, 0.667 * $threshold);
+	$linkColorActive:		tint($linkColor, 0.667 * $threshold);
+	$linkColorVisited:	tint($linkColor, 1.333 * $threshold);
+}
+
+/** Save current color scheme for later **/
+@mixin coloriseSave(){
+		$colorisePallete: $baseColor $altColor $quietColor $loudColor $headerColor $baseBackground $altBackground $quietBackground $loudBackground $headerBackground $linkColor $linkColorHover $linkColorFocus $linkColorActive $linkColorVisited $tableHeader $tableStripe;
+}
+@function coloriseSave(){
+		@return $baseColor $altColor $quietColor $loudColor $headerColor $baseBackground $altBackground $quietBackground $loudBackground $headerBackground $linkColor $linkColorHover $linkColorFocus $linkColorActive $linkColorVisited $tableHeader $tableStripe;
+}
+
+/** Restore the color settings from $colorisePallete **/
+@mixin coloriseRestore($pallete: $colorisePallete){
+	$baseColor: nth($pallete, 1);
+	$altColor: nth($pallete, 2);
+	$quietColor: nth($pallete, 3);
+	$loudColor: nth($pallete, 4);
+	$headerColor: nth($pallete, 5);
+	$baseBackground: nth($pallete, 6);
+	$altBackground: nth($pallete, 7);
+	$quietBackground: nth($pallete, 8);
+	$loudBackground: nth($pallete, 9);
+	$headerBackground: nth($pallete, 10);
+	$linkColor: nth($pallete, 11);
+	$linkColorHover: nth($pallete, 12);
+	$linkColorFocus: nth($pallete, 13);
+	$linkColorActive: nth($pallete, 14);
+	$linkColorVisited: nth($pallete, 15);
+	$tableHeader: nth($pallete, 16);
+	$tableStripe: nth($pallete, 17);
+}
+
+// Usage:
+//HTML:
+//<div class="demo-section">
+
+//</div>
+//div.classname {
+//	@include colorise-test;
+//}
+
+@function contrasted($bg, $black: black, $white: white){
+	@if (luma($bg) > 128) {
+		@return $black;
+	} @else {
+		@return $white;
+	}
+}
+
+@mixin coloriseInfo($color){
+	background-color: $color;
+	color: contrasted($color);
+	&:after {
+		content: "Hex: #{$color} - RGB: #{red($color)}, #{green($color)}, #{blue($color)} - HSL:  #{hue($color)}, #{saturation($color)}, #{lightness($color)} - Luma: #{luma($color)}";
+		color: gray;
+		background-color: white;
+	}
+}
+@mixin colorise-test(){
+	background: $baseBackground;
+	.baseColor   		{ @include coloriseInfo($baseColor); }
+	.altColor   		{ @include coloriseInfo($altColor);	}
+	.quietColor   		{ @include coloriseInfo($quietColor); }
+	.loudColor   		{ @include coloriseInfo($loudColor); }
+	h1,h2,h3,h4,h5,h6,.headerColor   	{ @include coloriseInfo($headerColor); }
+
+	.baseBackground   	{ @include coloriseInfo($baseBackground); }
+	.altBackground   	{ @include coloriseInfo($altBackground); }
+	.quietBackground   { @include coloriseInfo($quietBackground); }
+	.loudBackground   	{ @include coloriseInfo($loudBackground); }
+	.block-title, .headerBackground  { @include coloriseInfo($headerBackground); }
+
+	.link-color   			{ @include coloriseInfo($linkColor); }
+	.link-focus-color   { @include coloriseInfo($linkColorFocus); }
+	.link-hover-color   { @include coloriseInfo($linkColorHover); }
+	.link-active-color  { @include coloriseInfo($linkColorActive); }
+	.link-visited-color { @include coloriseInfo($linkColorVisited); }
+	.base-table-headerColor { @include coloriseInfo($tableHeader); }
+	.base-table-stripe-color { @include coloriseInfo($tableStripe); }
+}
+
+@mixin coloriseAnalogous($oc, $threshold: 10) {
+	@include schemeAnalogous($oc);
+	@include colorise($supportColor, $accentColor, $originalColor, $threshold);
+}
+
+@mixin coloriseTriadic($oc, $threshold: 10) {
+	@include schemeTriadic($oc);
+	@include colorise($supportColor, $accentColor, $originalColor, $threshold);
+}
+
+@mixin coloriseComplement($oc, $threshold: 10) {
+	@include schemeComplement($oc);
+	@include colorise($supportColor, $accentColor, $originalColor, $threshold);
+}
+
+@mixin coloriseLumaAnalogous($oc, $threshold: 10, $diff: 150) {
+	@include schemeAnalogous($oc);
+	@include coloriseLuma($supportColor, $accentColor, $originalColor, $threshold, $diff);
+}
+
+@mixin coloriseLumaTriadic($oc, $threshold: 10, $diff: 150) {
+	@include schemeTriadic($oc);
+	@include coloriseLuma($supportColor, $accentColor, $originalColor, $threshold, $diff);
+}
+
+@mixin coloriseLumaComplement($oc, $threshold: 10, $diff: 150) {
+	@include schemeComplement($oc);
+	@include coloriseLuma($supportColor, $accentColor, $originalColor, $threshold, $diff);
+}
+
+
+/** Color schemes **/
+
+/** Minimal Colorise the region or entire page **/
+@mixin coloriseMe($nested: true) {
+	@if ($nested){
+		color: $baseColor;
+		background-color: $baseBackground;
+	} @else {
+		body { color: $baseColor; background-color: $baseBackground; }
+	}
+	#{headers(all)} {
+		color: $headerColor;
+		a:link {
+			color: $linkColor;
+		}
+		a:visited {
+			color: $linkColorVisited;
+		}
+		a:hover {
+			color: $linkColorHover;
+		}
+		a:focus{
+			color: $linkColorFocus;
+		}
+		a:active {
+			color: $linkColorActive;
+		}
+	}
+	a:link {
+		color: $linkColor;
+	}
+	a:visited {
+		color: $linkColorVisited;
+	}
+	a:hover {
+		color: $linkColorHover;
+	}
+	a:focus{
+		color: $linkColorFocus;
+	}
+	a:active {
+		color: $linkColorActive;
+	}
+}
+/** Colorise the region or entire page using Blueprint CSS colors **/
+@mixin coloriseBp($nested: true) {
+	@include coloriseMe($nested);
+	hr { background: $altColor; }
+  	abbr, acronym, ins 	{	border-bottom: 1px dotted $quietColor;	}
+ 	address 			{ 	color: $altColor; }
+	blockquote 			{ background-color: $altBackground;	border-color: $quietColor;
+		&:before, &:after { color: $quietColor; } }
+	thead th {
+		background-color: $tableHeader;
+		color: $headerColor;
+  }
+  tbody tr {
+    &.odd, &:nth-child(2n+1) {
+      td { background-color: $baseBackground; color: $baseColor;}
+      th { background-color: $baseBackground; color: $headerColor; }
+    }
+	&.even, &:nth-child(2n) {
+    	td { background-color: $tableStripe; 	color: $baseColor;}
+    	th { background-color: $tableStripe;  color: $headerColor; }
+  	}
+  	&:hover {
+  		td { background-color: $quietBackground; 	color: $altColor;}
+    	th { background-color: $loudBackground;  color: $baseColor; }
+  	}
+  }
+  tfoot {
+    th, td {
+      background-color:  $tableHeader;
+      color: $headerColor;
+		}
+	}
+ 	caption         { background-color: $loudBackground; color: $baseColor; }
+	kbd 						{ color: $loudColor; background-color: $quietBackground; border-color: $loudBackground; }
+	var 						{ color: $loudColor; }
+	samp, del 			{ color: $quietColor; }
+	code						{ color: $headerColor; background-color: $quietBackground; border-color: $loudBackground; }
+	pre							{ background-color: $loudBackground; }
+}
+
+@mixin schemeAnalogous($oc) {
+	$originalColor: $oc;
+	$supportColor:adjust-hue($oc,30);
+	$accentColor:adjust-hue($oc,-30);
+}
+
+@mixin schemeTriadic($oc) {
+	$originalColor: $oc;
+	$supportColor:adjust-hue($oc,120);
+	$accentColor:adjust-hue($oc,-120);
+}
+
+@mixin schemeComplement($oc) {
+	$originalColor: $oc;
+	$supportColor:adjust-hue($oc,210);
+	$accentColor:adjust-hue($oc,150);
+}
+// Return the original color with lightness x 10
+@function oc($l){
+	@return hsl(hue($originalColor), saturation($originalColor), $l * 10);
+}
+// Return the support color with lightness x 10
+@function sc($l){
+	@return hsl(hue($supportColor), saturation($supportColor), $l * 10);
+}
+// Return the accent color with lightness x 10
+@function ac($l){
+	@return hsl(hue($accentColor), saturation($accentColor), $l * 10);
+}
+
+
+@mixin coloriseSimple(){
+	@if (luma($originalColor) > 128){
+	//	$colorisePallete: $baseColor $altColor $quietColor $loudColor $headerColor $baseBackground $altBackground $quietBackground $loudBackground $headerBackground $linkColor $linkColorHover $linkColorFocus $linkColorActive $linkColorVisited $tableHeader $tableStripe;
+		$colorisePallete: oc(1) oc(3) oc(4) oc(2) oc(0) oc(9) oc(6) oc(7) oc(8) oc(10) sc(3) ac(3) ac(2) ac(1) sc(2) sc(9) ac(9);
+	} @else {
+	//	$colorisePallete: $baseColor $altColor $quietColor $loudColor $headerColor $baseBackground $altBackground $quietBackground $loudBackground $headerBackground $linkColor $linkColorHover $linkColorFocus $linkColorActive $linkColorVisited $tableHeader $tableStripe;
+		$colorisePallete: oc(9) oc(7) oc(6) oc(8) oc(10) oc(1) oc(4) oc(3) oc(2) oc(0) sc(7) ac(7) ac(8) ac(9) sc(8) sc(1) ac(1);
+	}
+	@include coloriseRestore();
+}

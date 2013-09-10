@@ -1,0 +1,9 @@
+/* Effective stylesheet produced by snapshot save */
+h2.styleguide { font: 16px bold helvetica,arial,sans-serif; margin: 2em 0px 0.5em; padding: 0px; text-transform: uppercase; }
+#styleguide-header { background: none repeat scroll 0% 0% rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); color: rgb(51, 51, 51); padding: 0.5em 1em; }
+#styleguide-header .item-list { float: left; margin: 0px 2em 1em 0px; width: 20%; }
+#styleguide-header h3 { font: 16px bold helvetica,arial,sans-serif; margin: 0.5em 0px 0px; text-transform: uppercase; }
+#styleguide-header a, #styleguide-header li a.active { color: rgb(0, 113, 179); }
+#styleguide-header .break { margin-bottom: 1em; clear: both; }
+.styleguide-description { font: 12px helvetica,arial,sans-serif; margin: 0px 0px 0.5em; }
+div.styleguide { border-top: 1px solid rgb(119, 119, 119); padding-top: 1em; }
