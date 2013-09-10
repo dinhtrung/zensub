@@ -21,10 +21,10 @@
     <meta name="MobileOptimized" content="width">
     <meta name="HandheldFriendly" content="true">
     <meta name="viewport" content="width=device-width">
-    <link rel="apple-touch-icon" sizes="57x57" href="../ico/apple-touch-icon.png" />
-	<link rel="apple-touch-icon" sizes="72x72" href="../ico/apple-touch-icon-72x72.png" />
-	<link rel="apple-touch-icon" sizes="114x114" href="../ico/apple-touch-icon-114x114.png" />
-	<link rel="apple-touch-icon" sizes="144x144" href="../ico/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php print $directory; ?>/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php print $directory; ?>/ico/apple-touch-icon-114-precomposed.png">
+  	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php print $directory; ?>/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="<?php print $directory; ?>/ico/apple-touch-icon-57-precomposed.png">
 
   <?php endif; ?>
   <meta http-equiv="cleartype" content="on">
@@ -47,7 +47,7 @@
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
   <?php if ($skip_link_text && $skip_link_anchor): ?>
-    <p id="skip-link">
+    <p class="skip-link">
       <a href="#<?php print $skip_link_anchor; ?>" class="element-invisible element-focusable"><?php print $skip_link_text; ?></a>
     </p>
   <?php endif; ?>
