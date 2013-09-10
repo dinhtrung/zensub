@@ -1,0 +1,41 @@
+@import "components/colorise";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+@import "bootstrap/scaffolding";
+
+@include coloriseLumaTriadic(Snow, 20);
+$baseColor: hsl(hue($baseColor), 0, lightness($baseColor));
+@include coloriseBp(false);
+
+.footer, .header {
+	@include coloriseLumaAnalogous(Teal);
+	@include coloriseBp();
+}
+
+body { }
+	.page { }
+		.header, .main, .footer {}
+
+		.header {}
+			.header__logo { }
+				.header__logo-image {}
+			.header__name-and-slogan { }
+				.header__site-name {}
+				.header__site-slogan { }
+			.header__secondary-menu { 
+				ul { }
+			}
+			.header__region {}
+		.main-navigation {}
+		
+		.main {}
+
+		.main-content {}
+		.sidebars {}
+			.region-sidebar-first {}
+			.region-sidebar-second {}
+
+		.footer {
+			.block {}
+				.block__title { }
+		}
