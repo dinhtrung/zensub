@@ -1,0 +1,53 @@
+@import "components/colorise";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+@import "bootstrap/scaffolding";
+
+@include coloriseLumaTriadic(Snow, 20);
+$baseColor: hsl(hue($baseColor), 0, lightness($baseColor));
+@include coloriseBp(false);
+
+.wrapper {}
+
+.footer-wrapper, .header-wrapper {
+	@include coloriseLumaAnalogous(Teal);
+	@include coloriseBp();
+}
+.main-navigation {
+	@include coloriseLumaAnalogous($altBackground);
+	@include coloriseMe();
+}
+body { }
+	.page { }
+		.wrapper {}
+			.header, .main, .footer {}
+
+		.header-wrapper{
+			background-image: image-url("patterns-25/polaroid.png");
+		}
+			.header {}
+				.header__logo { }
+					.header__logo-image {}
+				.header__name-and-slogan { }
+					.header__site-name {}
+					.header__site-slogan { }
+				.header__secondary-menu { 
+					ul { }
+				}
+				.header__region {}
+		.main-navigation {}
+		
+		.main {}
+
+		.main-content {}
+		.sidebars {}
+			.region-sidebar-first {}
+			.region-sidebar-second {}
+		
+		.footer-wrapper {
+			background-image: image-url("patterns-50/60degree_gray.png");
+		}
+			.footer {
+				.block {}
+					.block__title { }
+			}

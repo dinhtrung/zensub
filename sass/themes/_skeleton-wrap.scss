@@ -1,0 +1,29 @@
+body { }
+	.page { }
+		.wrapper {}
+			.header, .main, .footer {}
+		.header-wrapper {}
+			.header {}
+				.header__logo { }
+					.header__logo-image {}
+				.header__name-and-slogan { }
+					.header__site-name {}
+					.header__site-slogan { }
+				.header__secondary-menu { 
+					ul { }
+				}
+				.header__region {}
+		.main-wrapper {}
+			.main {}
+
+			.main-content {}
+			.main-navigation {}
+			.sidebars {}
+				.region-sidebar-first {}
+				.region-sidebar-second {}
+
+		.footer-wrapper {}
+			.footer {
+				.block {}
+					.block__title { }
+			}

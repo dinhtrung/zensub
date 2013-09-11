@@ -1,0 +1,57 @@
+/**
+ * @file
+ * Styles are organized using the SMACSS technique. @see http://smacss.com/book/
+ *
+ * When you turn on CSS aggregation at admin/config/development/performance, all
+ * of these @include files will be combined into a single file.
+ */
+
+/* Import Sass mixins, variables, Compass modules, etc. */
+@import "init";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+/* HTML element (SMACSS base) rules */
+@import "normalize";
+
+/* Layout rules */
+@import "bootstrap/scaffolding";
+@import "bootstrap/type";
+@import "bootstrap/code";
+@import "bootstrap/grid";
+@import "bootstrap/tables";
+@import "layouts/responsive-wrap";
+
+
+/* Component (SMACSS module) rules */
+@import "components/element-invisible";
+@import "components/inline";
+
+@import "components/forms-drupal";
+@import "components/autocomplete";
+@import "components/button";
+@import "components/collapsible-fieldsets";
+@import "components/form-tables";
+@import "components/progress-bar";
+@import "components/tabledrag";
+
+@import "components/block";
+@import "components/breadcrumb";
+@import "components/comments";
+@import "components/header";
+@import "components/highlight-mark";
+@import "components/messages";
+@import "components/more-link";
+@import "components/navbar";
+@import "components/pager";
+@import "components/side-menu";
+@import "components/skip-link";
+@import "components/tabs";
+@import "components/watermark";
+@import "components/wireframes";
+
+@import "print";
+
+/* SMACSS theme rules */
+/* @import "theme-A"; */
+/* @import "theme-B"; */
+@import "themes/usingColorise-wrap";
