@@ -2,6 +2,79 @@
 // Buttons
 // --------------------------------------------------
 
+$btn-font-weight:                normal !default;
+
+$btn-default-color:              #333 !default;
+$btn-default-bg:                 #fff !default;
+$btn-default-border:             #ccc !default;
+
+$btn-primary-color:              #fff !default;
+$btn-primary-bg:                 #428bca !default;
+$btn-primary-border:             darken(#428bca, 5%) !default;
+
+$btn-success-color:              #fff !default;
+$btn-success-bg:                 #5cb85c !default;
+$btn-success-border:             darken(#5cb85c, 5%) !default;
+
+$btn-warning-color:              #fff !default;
+$btn-warning-bg:                 #f0ad4e !default;
+$btn-warning-border:             darken(#f0ad4e, 5%) !default;
+
+$btn-danger-color:               #fff !default;
+$btn-danger-bg:                  #d9534f !default;
+$btn-danger-border:              darken(#d9534f, 5%) !default;
+
+$btn-info-color:                 #fff !default;
+$btn-info-bg:                    #5bc0de !default;
+$btn-info-border:                darken(#5bc0de, 5%) !default;
+
+$btn-link-disabled-color:        #999 !default;
+
+// Button variants
+// -------------------------
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+@mixin button-variant($color, $background, $border) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open .dropdown-toggle & {
+    color: $color;
+    background-color: darken($background, 8%);
+        border-color: darken($border, 12%);
+  }
+  &:active,
+  &.active,
+  .open .dropdown-toggle & {
+    background-image: none;
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: $background;
+          border-color: $border
+    }
+  }
+}
+
+// Button sizes
+// -------------------------
+@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {
+  padding: $padding-vertical $padding-horizontal;
+  font-size: $font-size;
+  line-height: $line-height;
+  @include border-radius($border-radius);
+}
 
 // Base styles
 // --------------------------------------------------

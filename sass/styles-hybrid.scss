@@ -10,6 +10,8 @@
 @import "init";
 @import "bootstrap/variables";
 @import "bootstrap/mixins";
+
+
 /* HTML element (SMACSS base) rules */
 @import "normalize";
 
@@ -45,7 +47,33 @@
 
 @import "print";
 
+
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+// Reset
+@import "bootstrap/print";
+
+// Core CSS
+@import "bootstrap/scaffolding";
+@import "bootstrap/type";
+@import "bootstrap/code";
+@import "bootstrap/grid";
+@import "bootstrap/tables";
+@import "bootstrap/forms";
+
+.description { @extend .help-block; }
+.fieldset-description { @extend .text-muted; }
+.form-type-select, .form-type-text, .form-type-textarea, .form-actions { @extend .form-group; 
+	input { @extend .form-control; }
+}
+
+
+@import "bootstrap/buttons";
+input[type=submit] { @extend .btn; @extend .btn-primary; }
+input[type=reset] { @extend .btn; @extend .btn-warning; }
+a#edit-cancel { @extend .btn; @extend .btn-warning; }
+
 /* SMACSS theme rules */
 /* @import "theme-A"; */
 /* @import "theme-B"; */
-@import "themes/usingColorise";

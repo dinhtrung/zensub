@@ -5,6 +5,8 @@
 
 /* Import Sass mixins, variables, Compass modules, etc. */
 @import "init";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
 
 /* HTML element (SMACSS base) rules */
 @import "normalize-rtl";
