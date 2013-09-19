@@ -1,7 +1,7 @@
 //
 // Mixins
 // --------------------------------------------------
-
+@import "compass/css3";
 
 // Utilities
 // -------------------------
@@ -83,79 +83,8 @@
 // CSS3 PROPERTIES
 // @TODO: Replace the exist mixins with compass library
 // --------------------------------------------------
-@import "compass/css3";
 
-/*
-// Single side border-radius
-@mixin border-top-radius($radius) {
-  border-top-right-radius: $radius;
-   border-top-left-radius: $radius;
-}
-@mixin border-right-radius($radius) {
-  border-bottom-right-radius: $radius;
-     border-top-right-radius: $radius;
-}
-@mixin border-bottom-radius($radius) {
-  border-bottom-right-radius: $radius;
-   border-bottom-left-radius: $radius;
-}
-@mixin border-left-radius($radius) {
-  border-bottom-left-radius: $radius;
-     border-top-left-radius: $radius;
-}
 
-// Drop shadows
-@mixin box-shadow($shadow) {
-  -webkit-box-shadow: $shadow; // iOS <4.3 & Android <4.1
-          box-shadow: $shadow;
-}
-
-// Transitions
-@mixin transition($transition) {
-  -webkit-transition: $transition;
-          transition: $transition;
-}
-@mixin transition-delay($transition-delay) {
-  -webkit-transition-delay: $transition-delay;
-          transition-delay: $transition-delay;
-}
-@mixin transition-duration($transition-duration) {
-  -webkit-transition-duration: $transition-duration;
-          transition-duration: $transition-duration;
-}
-@mixin transition-transform($transition) {
-  -webkit-transition: -webkit-transform $transition;
-     -moz-transition: -moz-transform $transition;
-       -o-transition: -o-transform $transition;
-          transition: transform $transition;
-}
-
-// Transformations
-@mixin rotate($degrees) {
-  -webkit-transform: rotate($degrees);
-      -ms-transform: rotate($degrees); // IE9+
-          transform: rotate($degrees);
-}
-@mixin scale($ratio) {
-  -webkit-transform: scale($ratio);
-      -ms-transform: scale($ratio); // IE9+
-          transform: scale($ratio);
-}
-@mixin translate($x, $y) {
-  -webkit-transform: translate($x, $y);
-      -ms-transform: translate($x, $y); // IE9+
-          transform: translate($x, $y);
-}
-@mixin skew($x, $y) {
-  -webkit-transform: skew($x, $y);
-      -ms-transform: skewX($x) skewY($y); // See https://github.com/twbs/bootstrap/issues/4885; IE9+
-          transform: skew($x, $y);
-}
-@mixin translate3d($x, $y, $z) {
-  -webkit-transform: translate3d($x, $y, $z);
-          transform: translate3d($x, $y, $z);
-}
-*/
 
 // Backface visibility
 // Prevent browsers from flickering when using CSS 3D transforms.
@@ -402,51 +331,7 @@
   }
 }
 
-// Button variants
-// -------------------------
-// Easily pump out default styles, as well as :hover, :focus, :active,
-// and disabled options for all buttons
-@mixin button-variant($color, $background, $border) {
-  color: $color;
-  background-color: $background;
-  border-color: $border;
 
-  &:hover,
-  &:focus,
-  &:active,
-  &.active,
-  .open .dropdown-toggle & {
-    color: $color;
-    background-color: darken($background, 8%);
-        border-color: darken($border, 12%);
-  }
-  &:active,
-  &.active,
-  .open .dropdown-toggle & {
-    background-image: none;
-  }
-  &.disabled,
-  &[disabled],
-  fieldset[disabled] & {
-    &,
-    &:hover,
-    &:focus,
-    &:active,
-    &.active {
-      background-color: $background;
-          border-color: $border
-    }
-  }
-}
-
-// Button sizes
-// -------------------------
-@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {
-  padding: $padding-vertical $padding-horizontal;
-  font-size: $font-size;
-  line-height: $line-height;
-  @include border-radius($border-radius);
-}
 
 // Pagination
 // -------------------------

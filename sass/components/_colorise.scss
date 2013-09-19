@@ -29,6 +29,9 @@ $colorisePallete: $baseColor $altColor $quietColor $loudColor $headerColor $base
 
 
 /** Calculate luma for a color **/
+@function coloriseSave(){
+	@return $baseColor $altColor $quietColor $loudColor $headerColor $baseBackground $altBackground $quietBackground $loudBackground $headerBackground $linkColor $linkColorHover $linkColorFocus $linkColorActive $linkColorVisited $tableHeader $tableStripe;
+}
 @function luma($color){
 	@return round(
 		((red($color)*299)+(green($color)*587)+(blue($color)*114))/1000
@@ -36,7 +39,7 @@ $colorisePallete: $baseColor $altColor $quietColor $loudColor $headerColor $base
 }
 
 /** Choose a color with a specified luma threshold... Vary based on lightness, then saturation. **/
-@function luma-threshold($color, $threshold, $lighter: true){
+@function lumaThreshold($color, $threshold, $lighter: true){
 	$h: hue($color); $s: saturation($color); $l: lightness($color);
 	@if ($lighter){
 		$l: 5;
@@ -71,13 +74,13 @@ $colorisePallete: $baseColor $altColor $quietColor $loudColor $headerColor $base
 @mixin coloriseLuma($color, $link, $background, $color-threshold: 5, $diff: 150){
 	@if (luma($background) > 128){
 		$threshold: luma($background) - $diff;
-		$color: luma-threshold($color, $threshold, false);
-		$link: luma-threshold($link, $threshold, false);
+		$color: lumaThreshold($color, $threshold, false);
+		$link: lumaThreshold($link, $threshold, false);
 		@include coloriseDark($color, $link, $background, $color-threshold);
 	} @else {
 		$threshold: luma($background) + $diff;
-		$color: luma-threshold($color, $threshold);
-		$link: luma-threshold($link, $threshold);
+		$color: lumaThreshold($color, $threshold);
+		$link: lumaThreshold($link, $threshold);
 		@include coloriseLight($color, $link, $background, $color-threshold);
 	}
 }

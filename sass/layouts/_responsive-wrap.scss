@@ -1,5 +1,6 @@
 @import "compass/utilities";
 @import "compass/typography";
+@import "bootstrap/grid";
 .page { 
 }
 .wrapper {
@@ -11,21 +12,6 @@
 	padding-bottom: 1em;
 }
 
-/* Navigation bar */
-@media all and (min-width: $screen-tablet) {
-  .main {
-    /* Move all the children of .main down to make room. */
-    padding-top: $nav-height;
-    position: relative;
-  }
-  .main-navigation {
-    /* Move the navbar up inside .main's padding. */
-    position: absolute;
-    top: 0;
-    height: $nav-height;
-    width: 100%;
-  }
-}
 
 .header {}
 	.header__logo { display: block; @include make-sm-column(3);  text-align: center; }
@@ -51,15 +37,6 @@
 		}
 	}
 	
-
-.main-navigation { 
-	@extend .navbar; 
-	@extend .navbar-default;
-	ul { @extend .nav; @extend .navbar-nav; padding-left: 1em; }
-		a { 
-			&:hover, &:active, &:focus { text-decoration: underline; }
-		 }
-}
 
 .two-sidebars {
 	.main-content {

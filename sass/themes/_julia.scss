@@ -1,0 +1,91 @@
+@import "components/colorise";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+@import "bootstrap/scaffolding";
+@import "bootstrap/code";
+@import "bootstrap/navs";
+@import "bootstrap/navbar";
+
+%light-theme {
+	$baseColor:		#333;
+	$altColor:		#586e75;
+	$quietColor:    #073642;
+	$loudColor:     #657b83;
+	$headerColor:   #860A76;
+	$baseBackground: #fff;
+	$altBackground:  Gainsboro;
+	$headerBackground:		Lavender;
+	$quietBackground:		darken($baseBackground, 6.67%);
+	$loudBackground:		darken($baseBackground, 13.33%);
+	$linkColor:        DarkRed;
+	$linkColorHover:   DeepSkyBlue;
+	$linkColorFocus:   DeepSkyBlue;
+	$linkColorActive:  FireBrick;
+	$linkColorVisited: $linkColor;
+	$tableHeader: $headerBackground;
+	$tableStripe: $altBackground;
+	@include coloriseBp();
+}
+$light-theme: coloriseSave();
+%dark-theme {
+	@include coloriseLumaTriadic(#860A76, 15, 180);
+	// Some more override...
+/*	$baseColor:		FloralWhite;
+		$headerBackground:	Lavender;
+	$altColor:		#586e75;
+	$quietColor:    #073642;
+	$loudColor:     #657b83;
+	$headerColor:   DarkRed;
+	$baseBackground: DarkSlateBlue;
+	$altBackground:  Gainsboro;
+	
+	$quietBackground:		darken($baseBackground, 6.67%);
+	$loudBackground:		darken($baseBackground, 13.33%);
+	$linkColor:        DodgerBlue;
+	$linkColorHover:   DeepSkyBlue;
+	$linkColorFocus:   DeepSkyBlue;
+	$linkColorActive:  FireBrick;
+	$linkColorVisited: $linkColor;
+	$tableHeader: $headerBackground;
+	$tableStripe: $altBackground; */
+	@include coloriseBp();
+}
+$dark-theme: coloriseSave();
+.footer-wrapper, .header-wrapper {
+	@extend %dark-theme;
+}
+
+
+@include coloriseRestore($light-theme);
+@include coloriseBp(false);
+body { }
+	.page { }
+		.wrapper {}
+			.header, .main, .footer {}
+		.header-wrapper {}
+			.header {}
+				.header__logo { }
+					.header__logo-image { }
+				.header__name-and-slogan { }
+					.header__site-name {}
+					.header__site-slogan { }
+				.header__secondary-menu { 
+					ul { }
+				}
+				.header__region {}
+		.main-wrapper {
+			
+		}
+			.main {}
+
+			.main-content {}
+			.main-navigation {}
+			.sidebars {}
+				.region-sidebar-first {}
+				.region-sidebar-second {}
+
+		.footer-wrapper {}
+			.footer {
+				.block {}
+					.block__title { }
+			}
